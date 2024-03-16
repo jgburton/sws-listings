@@ -1,34 +1,107 @@
+import styled from 'styled-components';
+
 interface ListingCardProps {
-    name: string;
+  name: string;
 }
 
-const ListingCard: React.FC<ListingCardProps> = ({
-    name
-}) => {
-  return <div>Listing Card - {name}</div>;
+const Container = styled.div`
+  height: 310px;
+  border-radius: 8px;
+  box-shadow: rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+  cursor: pointer;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+
+  p {
+    margin: 0px;
+  }
+`;
+
+const CompanyInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const LogoWrapper = styled.div`
+  .stock-name {
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+  }
+  .stock-price {
+    font-size: 13px;
+    opacity: 0.7;
+  }
+`;
+
+// const LogoCanvas = styled.canvas`
+
+// `;
+
+const CompanyData = styled.div``;
+
+const StockInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  bottom: 1rem;
+
+  .StockInfoSummary {
+    margin-right: 40px;
+  }
+  .title {
+    font-size: 11px;
+    opacity: 0.7;
+  }
+  .info {
+    font-size: 13px;
+  }
+`;
+
+const ChangeInfo = styled.div<{ infoValue: number }>`
+  margin-right: 20px;
+
+  span {
+    color: ${(props) => (props.infoValue > 0 ? 'green' : 'red')};
+  }
+`;
+
+const ListingCard: React.FC<ListingCardProps> = ({ name }) => {
+  return (
+    <Container key={name}>
+      <CompanyInfo>
+        <LogoWrapper>
+          <p className="stock-name">BHP Group</p>
+          <p className="stock-price">AU$214.9b</p>
+        </LogoWrapper>
+        <LogoWrapper className="sc-lllnCg iqDMY">
+          {/* <LogoCanvas width="560" height="560" /> */}
+        </LogoWrapper>
+      </CompanyInfo>
+      <CompanyData>
+        <StockInfo>
+          <div className="StockInfoSummary">
+            <p className="title">BHP</p>
+            <p className="info">AU$42.41</p>
+          </div>
+          <ChangeInfo infoValue={-3.5}>
+            <p className="title">7D</p>
+            <p className="info">
+              <span>-3.5%</span>
+            </p>
+          </ChangeInfo>
+          <ChangeInfo infoValue={2.3}>
+            <p className="title">1Y</p>
+            <p className="info">
+              <span>2.3%</span>
+            </p>
+          </ChangeInfo>
+        </StockInfo>
+      </CompanyData>
+    </Container>
+  );
 };
 
 export default ListingCard;
-
-
-// TODO:
-// 1. Show a list of companies presented in a tile
-// 2. Tile that shows the company name (Apple), unique symbol (NasdaqGS:APPL), snowflake score
-// 3. Pagination. You can approach this however you want.
-// 4. Filtering by country (refer to https://simplywall.st/stocks for supported country list)
-// 5. Sorting by market cap (ASC and DESC direction)
-// 6. Some form of basic styling. Feel free to use design systems as long as it doesn't have any conflict with the primary criteria (see below).
-
-// Primary criteria:
-// Component modelling (How you organise your components into logical groups)
-// Styling architecture (How you implement your styles; hand-written styles or design system)
-// Rendering performance (Check for performance bottlenecks)
-// Avoid overengineering (Simple and straightforward)
-// Type-safety. Ensure you have proper type definitions. Prefer inference over explicit types.
-
-// Optional criteria:
-// Data structures (How you store internal state)
-// Testing practices
-// a11y
-// i18n readiness
-

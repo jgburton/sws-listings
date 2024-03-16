@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 interface ListingCardProps {
   name: string;
+  ticker_symbol: string;
+  market_cap: string;
 }
 
 const Container = styled.div`
@@ -68,13 +70,24 @@ const ChangeInfo = styled.div<{ infoValue: number }>`
   }
 `;
 
-const ListingCard: React.FC<ListingCardProps> = ({ name }) => {
+const ListingCard: React.FC<ListingCardProps> = ({
+  name,
+  ticker_symbol,
+  market_cap,
+}) => {
+
+const formatted_market_cap = (market_cap / 1e9).toFixed(1) + "b"; 
+// TODO: Should be a utility funtion and be felxible b/m etc
+
   return (
     <Container key={name}>
       <CompanyInfo>
         <LogoWrapper>
-          <p className="stock-name">BHP Group</p>
-          <p className="stock-price">AU$214.9b</p>
+          <p className="stock-name">{name}</p>
+          {/* <p className="stock-price">AU$214.9b</p> */}
+          <p className="stock-price">{"CA$" +formatted_market_cap}</p> 
+          {/* //TODO: currency prefix should be dynamic */}
+          {/* TODO: this needs to be parsed to get currency */}
         </LogoWrapper>
         <LogoWrapper className="sc-lllnCg iqDMY">
           {/* <LogoCanvas width="560" height="560" /> */}
@@ -83,7 +96,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ name }) => {
       <CompanyData>
         <StockInfo>
           <div className="StockInfoSummary">
-            <p className="title">BHP</p>
+            <p className="title">{ticker_symbol}</p>
             <p className="info">AU$42.41</p>
           </div>
           <ChangeInfo infoValue={-3.5}>

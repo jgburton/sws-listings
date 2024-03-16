@@ -1,10 +1,8 @@
 import styled from 'styled-components';
-
-import { TestData } from '../../App';
 import ListingCard from './ListingCard';
 
 interface ListingContainerProps {
-  data: TestData[];
+  data: unknown;
 }
 
 const Container = styled.div`
@@ -32,7 +30,17 @@ const Container = styled.div`
 `;
 
 const ListingContainer: React.FC<ListingContainerProps> = ({ data }) => {
-  const listItems = data.map(({ name }) => <ListingCard name={name} />);
+  const listItems = data['data'].map(
+    (data: { name: string; ticker_symbol: string; market_cap: string }) => (
+      <ListingCard
+        name={data.name}
+        ticker_symbol={data.ticker_symbol}
+        market_cap={data.grid.data.market_cap}
+      />
+    )
+  );
+
+  console.log(data['data']);
 
   return <Container>{listItems}</Container>;
 };

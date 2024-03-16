@@ -1,33 +1,60 @@
 import './App.css';
 import ListContainer from './components/listings/ListContainer';
-// import ListingCard from './components/listings/ListingCard';
+import { useQuery } from '@tanstack/react-query';
 
-export interface TestData {
-  name: string;
-}
+const fetchStocks = async () => {
+  const response = await fetch(
+    'https://simplywall.st/api/grid/filter?include=grid,score',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'Cache-Control': 'no-cache',
+        sws: 'fe-challenge',
+      },
+      body: JSON.stringify({
+        id: 1,
+        no_result_if_limit: false,
+        offset: 0,
+        size: 12,
+        state: 'read',
+        rules: [
+          ['order_by', 'market_cap', 'desc'],
+          ['grid_visible_flag', '=', true],
+          ['market_cap', 'is_not_null'],
+          ['primary_flag', '=', true],
+          ['is_fund', '=', false],
+          ['aor', [['country_name', 'in', ['ca']]]],
+        ],
+      }),
+    }
+  );
 
-const MockData: TestData[] = [
-  { name: 'Test1' },
-  { name: 'Test2' },
-  { name: 'Test3' },
-  { name: 'Test4' },
-  { name: 'Test5' },
-  { name: 'Test1' },
-  { name: 'Test2' },
-  { name: 'Test3' },
-  { name: 'Test4' },
-  { name: 'Test5' },
-  { name: 'Test1' },
-  { name: 'Test2' },
-  { name: 'Test3' },
-  { name: 'Test4' },
-  { name: 'Test5' },
-];
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+
+  return response.json();
+};
 
 function App() {
+  const { data, isLoading, isError } = useQuery<unknown, Error>({
+    queryKey: ['stocks'],
+    queryFn: fetchStocks,
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error fetching data</div>;
+  }
+
   return (
     <>
-      <ListContainer data={MockData} />
+      <ListContainer data={data} />
     </>
   );
 }

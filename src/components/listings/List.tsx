@@ -32,11 +32,23 @@ const Container = styled.div`
 
 const ListingContainer: React.FC<ListingContainerProps> = ({ data }) => {
   const listItems = data['data'].map(
-    (data: { name: string; ticker_symbol: string; market_cap: string }) => (
+    (data: {
+      name: string;
+      ticker_symbol: string;
+      market_cap: string;
+      reporting_currency_symbol: string;
+      share_price: string;
+      image: string;
+    }) => (
       <ListingCard
         name={data.name}
         ticker_symbol={data.ticker_symbol}
         market_cap={data.grid.data.market_cap}
+        reporting_currency_symbol={
+          data.grid.data.currency_info.reporting_currency_symbol
+        }
+        share_price={data.grid.data.share_price}
+        image={data.grid.data.main_thumb}
       />
     )
   );
@@ -46,7 +58,7 @@ const ListingContainer: React.FC<ListingContainerProps> = ({ data }) => {
   return (
     <>
       <ListHeader />
-      <Container>{listItems}</Container>;
+      <Container>{listItems}</Container>
     </>
   );
 };

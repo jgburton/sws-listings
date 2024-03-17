@@ -5,6 +5,9 @@ interface ListingCardProps {
   name: string;
   ticker_symbol: string;
   market_cap: string;
+  reporting_currency_symbol: string;
+  share_price: string;
+  image: string;
 }
 
 const Container = styled.div`
@@ -21,6 +24,8 @@ const Container = styled.div`
   p {
     margin: 0px;
   }
+
+  position: relative;
 `;
 
 const CompanyInfo = styled.div`
@@ -39,9 +44,19 @@ const LogoWrapper = styled.div`
   }
 `;
 
-// const LogoCanvas = styled.canvas`
+const LogoCanvas = styled.canvas<{ image: string }>`
+  background-image: url(${(props) => props.image});
+  background-size: cover;
+  background-position: center;
+  opacity: 0.1;
+  filter: blur(5px);
 
-// `;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
 
 const CompanyData = styled.div``;
 
@@ -75,40 +90,43 @@ const ListingCard: React.FC<ListingCardProps> = ({
   name,
   ticker_symbol,
   market_cap,
+  reporting_currency_symbol,
+  share_price,
+  image,
 }) => {
-
-const formatted_market_cap = roundToNearestBillionOrMillion(market_cap);
+  const formatted_market_cap = roundToNearestBillionOrMillion(market_cap);
 
   return (
     <Container key={name}>
       <CompanyInfo>
         <LogoWrapper>
           <p className="stock-name">{name}</p>
-          {/* <p className="stock-price">AU$214.9b</p> */}
-          <p className="stock-price">{"CA$" +formatted_market_cap}</p> 
-          {/* //TODO: currency prefix should be dynamic */}
-          {/* TODO: this needs to be parsed to get currency */}
+          <p className="stock-price">
+            {reporting_currency_symbol + formatted_market_cap}
+          </p>
         </LogoWrapper>
-        <LogoWrapper className="sc-lllnCg iqDMY">
-          {/* <LogoCanvas width="560" height="560" /> */}
+        <LogoWrapper>
+          <LogoCanvas image={image} width="560" height="560" />
         </LogoWrapper>
       </CompanyInfo>
       <CompanyData>
         <StockInfo>
           <div className="StockInfoSummary">
             <p className="title">{ticker_symbol}</p>
-            <p className="info">AU$42.41</p>
+            <p className="info">{reporting_currency_symbol + share_price}</p>
           </div>
           <ChangeInfo infoValue={-3.5}>
             <p className="title">7D</p>
             <p className="info">
               <span>-3.5%</span>
+              {/* TODO: How to aquire or calculate this? */}
             </p>
           </ChangeInfo>
           <ChangeInfo infoValue={2.3}>
             <p className="title">1Y</p>
             <p className="info">
               <span>2.3%</span>
+              {/* TODO: How to aquire or calculate this? */}
             </p>
           </ChangeInfo>
         </StockInfo>

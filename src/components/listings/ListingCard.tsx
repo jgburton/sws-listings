@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { roundToNearestBillionOrMillion } from '../../utilities';
 
 interface ListingCardProps {
   name: string;
@@ -76,8 +77,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   market_cap,
 }) => {
 
-const formatted_market_cap = (market_cap / 1e9).toFixed(1) + "b"; 
-// TODO: Should be a utility funtion and be felxible b/m etc
+const formatted_market_cap = roundToNearestBillionOrMillion(market_cap);
 
   return (
     <Container key={name}>

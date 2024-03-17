@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import ListingCard from './ListingCard';
+import ListHeader from './ListHeader';
 
 interface ListingContainerProps {
   data: unknown;
@@ -40,9 +41,14 @@ const ListingContainer: React.FC<ListingContainerProps> = ({ data }) => {
     )
   );
 
-  console.log(data['data']);
+  console.log(data['data']); //TODO: delete
 
-  return <Container>{listItems}</Container>;
+  return (
+    <>
+      <ListHeader />
+      <Container>{listItems}</Container>;
+    </>
+  );
 };
 
 export default ListingContainer;

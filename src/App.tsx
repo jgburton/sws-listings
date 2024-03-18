@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { fetchStocks } from './api/stocks/api';
 import ListContainer from './components/listings/List';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInView } from 'react-intersection-observer';
 
 
 function App() {
+  const { ref, inView } = useInView();
   const { data, isLoading, isError, error, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ['stocks'],
     queryFn: fetchStocks,
@@ -19,6 +21,13 @@ function App() {
     }
   });
 
+  useEffect(() => {
+    if(inView && hasNextPage){
+      // console.log('Fire');
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
+
   console.log(data);
 
   if (isLoading) {
@@ -31,7 +40,8 @@ function App() {
   return (
     <>
       {!isLoading && !isError && <ListContainer data={data} /> }
-      <button style={{margin: '1rem 0'}}disabled={!hasNextPage || isFetchingNextPage} onClick={() => fetchNextPage()}>{isFetchingNextPage ? 'Loading...' : hasNextPage ? 'Load More' : 'Nothing more to load'}</button>
+      {/* <button ref={ref} style={{margin: '1rem 0'}}disabled={!hasNextPage || isFetchingNextPage} onClick={() => fetchNextPage()}>{isFetchingNextPage ? 'Loading...' : hasNextPage ? 'Load More' : 'Nothing more to load'}</button> */}
+      {isFetchingNextPage ? <p>Loading...</p> :  <p ref={ref} >More stocks...</p>}
     </>
   );
 }

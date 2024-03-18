@@ -5,6 +5,7 @@ import React from 'react';
 
 interface ListingContainerProps {
   data: unknown;
+  // innerRef: React.Ref<HTMLElement>;
 }
 
 const Container = styled.div`
@@ -43,7 +44,24 @@ const ListingContainer: React.FC<ListingContainerProps> = ({ data }) => {
           reporting_currency_symbol: string;
           share_price: string;
           image: string;
-       }, stockIndex: number) => (
+       }, stockIndex: number) => { 
+        // if(stocks.data.length == stockIndex + 1) {
+        //   return (
+        //     <ListingCard
+        //     ref={innerRef}
+        //     key={stockIndex}
+        //     name={data.name}
+        //     ticker_symbol={data.ticker_symbol}
+        //     market_cap={data.grid.data.market_cap}
+        //     reporting_currency_symbol={
+        //       data.grid.data.currency_info.reporting_currency_symbol
+        //     }
+        //     share_price={data.grid.data.share_price}
+        //     image={data.grid.data.main_thumb}
+        //   />
+        //   )
+        // }
+        return (
         // <p key={stockIndex}>{stock.name}</p>
         <ListingCard
         key={stockIndex}
@@ -56,7 +74,7 @@ const ListingContainer: React.FC<ListingContainerProps> = ({ data }) => {
         share_price={data.grid.data.share_price}
         image={data.grid.data.main_thumb}
       />
-      ))}
+      )})}
     </React.Fragment>
   ));
 

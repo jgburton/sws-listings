@@ -8,6 +8,7 @@ interface ListingCardProps {
   reporting_currency_symbol: string;
   share_price: string;
   image: string;
+  // innerRef?: React.Ref<HTMLElement>;
 }
 
 const Container = styled.div`
@@ -93,6 +94,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   reporting_currency_symbol,
   share_price,
   image,
+  // innerRef
 }) => {
   const formatted_market_cap = roundToNearestBillionOrMillion(market_cap);
 

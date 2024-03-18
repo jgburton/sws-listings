@@ -79,11 +79,11 @@ const StockInfo = styled.div`
   }
 `;
 
-const ChangeInfo = styled.div<{ infoValue: number }>`
+const ChangeInfo = styled.div<{ infovalue: number }>`
   margin-right: 20px;
 
   span {
-    color: ${(props) => (props.infoValue > 0 ? 'green' : 'red')};
+    color: ${(props) => (props.infovalue > 0 ? 'green' : 'red')};
   }
 `;
 
@@ -117,14 +117,14 @@ const ListingCard: React.FC<ListingCardProps> = ({
             <p className="title">{ticker_symbol}</p>
             <p className="info">{reporting_currency_symbol + share_price}</p>
           </div>
-          <ChangeInfo infoValue={-3.5}>
+          <ChangeInfo infovalue={-3.5}>
             <p className="title">7D</p>
             <p className="info">
               <span>-3.5%</span>
               {/* TODO: How to aquire or calculate this? */}
             </p>
           </ChangeInfo>
-          <ChangeInfo infoValue={2.3}>
+          <ChangeInfo infovalue={2.3}>
             <p className="title">1Y</p>
             <p className="info">
               <span>2.3%</span>

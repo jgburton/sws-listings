@@ -1,5 +1,15 @@
 import styled from 'styled-components';
 import Dropdown from '../inputs/DropDown';
+import { SortingOrder } from '../../types';
+import { Dispatch, SetStateAction } from 'react';
+
+interface ListHeaderProps {
+  marketCapSort: SortingOrder;
+  setMarketCapSort: Dispatch<React.SetStateAction<SortingOrder>>;
+  countryName: string;
+  setCountryName: Dispatch<React.SetStateAction<string>>;
+  totalRecords: string;
+}
 
 const HeaderContainer = styled.div`
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -62,11 +72,28 @@ const BodyText = styled.p<{ small?: boolean }>`
 `;
 
 const filterOptions = [
-  { value: 'option1', label: 'Market Cap High to Low' },
-  { value: 'option2', label: 'Market Cap Low to High' },
+  { value: SortingOrder.DESC, label: 'Market Cap High to Low' },
+  { value: SortingOrder.ASC, label: 'Market Cap Low to High' },
 ];
 
-const ListHeader = () => {
+const ListHeader: React.FC<ListHeaderProps> = ({
+  // marketCapSort,
+  setMarketCapSort,
+  // countryName,
+  // setCountryName,
+  totalRecords
+}) => {
+  //TODO: could be improved
+  const handleMarketCapSortChange = (selectedOption: {
+    value: SetStateAction<SortingOrder>;
+  }) => {
+    if (selectedOption.toString() == 'asc') {
+      setMarketCapSort(SortingOrder.ASC);
+    } else {
+      setMarketCapSort(SortingOrder.DESC);
+    }
+  };
+
   return (
     <HeaderContainer>
       <p>
@@ -83,10 +110,13 @@ const ListHeader = () => {
       <div className="container">
         <div className="column">
           {' '}
-          <Dropdown options={filterOptions} />
+          <Dropdown
+            options={filterOptions}
+            onChange={handleMarketCapSortChange}
+          />
         </div>
         <div className="column center">
-          <BodyText small>3,310 companies</BodyText>
+          <BodyText small>{`${totalRecords} companies`}</BodyText>
         </div>
         <div className="column"></div>
       </div>

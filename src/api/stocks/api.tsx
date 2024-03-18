@@ -1,12 +1,15 @@
-// export enum SortingOrder {
-//   ASC = 'asc',
-//   DESC = 'desc',
-// }
-// TODO: Sort by market cap & country - how to pass these values?
+import { SortingOrder } from '../../types';
 
 // TODO: How to determine number of pages?
-
-const fetchStocks = async ({ pageParam }: { pageParam: number }) => {
+const fetchStocks = async ({
+  pageParam,
+  marketCapSort = SortingOrder.DESC,
+  countryName = 'ca',
+}: {
+  pageParam: number;
+  marketCapSort: SortingOrder;
+  countryName: string;
+}) => {
   const offset = pageParam > 1 ? pageParam * 60 : 0;
 
   const response = await fetch(
@@ -26,12 +29,12 @@ const fetchStocks = async ({ pageParam }: { pageParam: number }) => {
         size: 60,
         state: 'read',
         rules: [
-          ['order_by', 'market_cap', 'desc'],
+          ['order_by', 'market_cap', marketCapSort],
           ['grid_visible_flag', '=', true],
           ['market_cap', 'is_not_null'],
           ['primary_flag', '=', true],
           ['is_fund', '=', false],
-          ['aor', [['country_name', 'in', ['ca']]]],
+          ['aor', [['country_name', 'in', [countryName]]]],
         ],
       }),
     }

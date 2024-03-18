@@ -1,11 +1,17 @@
 import styled from 'styled-components';
 import ListingCard from './ListingCard';
 import ListHeader from './ListHeader';
-import React from 'react';
+import React, { Dispatch } from 'react';
+import { SortingOrder } from '../../types';
 
 interface ListingContainerProps {
   data: unknown;
   innerRef: React.Ref<HTMLDivElement>;
+
+  marketCapSort: SortingOrder;
+  setMarketCapSort: Dispatch<React.SetStateAction<SortingOrder>>;
+  countryName: string;
+  setCountryName: Dispatch<React.SetStateAction<string>>;
 }
 
 const Container = styled.div`
@@ -13,7 +19,7 @@ const Container = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 24px;
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   }
   @media (max-width: 480px) {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -23,8 +29,20 @@ const Container = styled.div`
 const ListingContainer: React.FC<ListingContainerProps> = ({
   data,
   innerRef,
+  marketCapSort,
+  setMarketCapSort,
+  countryName,
+  setCountryName,
 }) => {
-  //TODO: to refine content
+  const sortingProps = {
+    marketCapSort,
+    setMarketCapSort,
+    countryName,
+    setCountryName,
+  };
+
+  // TODO: Refine
+  const totalRecords = data?.pages[0].meta.real_total_records;
   const content = data?.pages.map((stocks, pageIndex) => (
     <React.Fragment key={pageIndex}>
       {stocks.data.map(
@@ -60,7 +78,7 @@ const ListingContainer: React.FC<ListingContainerProps> = ({
 
   return (
     <>
-      <ListHeader />
+      <ListHeader totalRecords={totalRecords} {...sortingProps} />
       <Container>{content}</Container>
     </>
   );

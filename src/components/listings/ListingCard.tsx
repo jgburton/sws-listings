@@ -8,7 +8,7 @@ interface ListingCardProps {
   reporting_currency_symbol: string;
   share_price: string;
   image: string;
-  // innerRef?: React.Ref<HTMLElement>;
+  innerRef: React.Ref<HTMLDivElement>;
 }
 
 const Container = styled.div`
@@ -94,12 +94,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
   reporting_currency_symbol,
   share_price,
   image,
-  // innerRef
+  innerRef,
 }) => {
   const formatted_market_cap = roundToNearestBillionOrMillion(market_cap);
 
   return (
-    <Container key={name}>
+    <Container ref={innerRef} key={name}>
       <CompanyInfo>
         <LogoWrapper>
           <p className="stock-name">{name}</p>

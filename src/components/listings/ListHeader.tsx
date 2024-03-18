@@ -61,8 +61,7 @@ const BodyText = styled.p<{ small?: boolean }>`
     props.small ? 'rgba(255, 255, 255, 0.3);' : 'rgba(255, 255, 255, 0.5);'};
 `;
 
-// TODO: Temp
-const options = [
+const filterOptions = [
   { value: 'option1', label: 'Market Cap High to Low' },
   { value: 'option2', label: 'Market Cap Low to High' },
 ];
@@ -84,7 +83,7 @@ const ListHeader = () => {
       <div className="container">
         <div className="column">
           {' '}
-          <Dropdown options={options} />
+          <Dropdown options={filterOptions} />
         </div>
         <div className="column center">
           <BodyText small>3,310 companies</BodyText>
@@ -98,9 +97,5 @@ const ListHeader = () => {
 export default ListHeader;
 
 // TODO:
-// 1. Style titles - DONE
-// 2. Style HR - DONE
-// 3. Set up actual layout - DONE
-
-// 4. Implement dropdowns
-// 5. consume data with interface and props etc
+// 1. Implement dropdowns
+// 2. consume data with interface and props etc

@@ -42,8 +42,6 @@ const fetchStocks = async ({ pageParam }: { pageParam: number }) => {
   }
 
   return response.json();
-
 };
-
 
 export { fetchStocks };

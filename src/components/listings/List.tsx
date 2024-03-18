@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import ListingCard from './ListingCard';
 import ListHeader from './ListHeader';
+import React from 'react';
 
 interface ListingContainerProps {
   data: unknown;
@@ -31,16 +32,21 @@ const Container = styled.div`
 `;
 
 const ListingContainer: React.FC<ListingContainerProps> = ({ data }) => {
-  const listItems = data['data'].map(
-    (data: {
-      name: string;
-      ticker_symbol: string;
-      market_cap: string;
-      reporting_currency_symbol: string;
-      share_price: string;
-      image: string;
-    }) => (
-      <ListingCard
+
+  //TODO: to refine
+  const content = data?.pages.map((stocks, pageIndex) => (
+    <React.Fragment key={pageIndex}>
+      {stocks.data.map((data: {
+          name: string;
+          ticker_symbol: string;
+          market_cap: string;
+          reporting_currency_symbol: string;
+          share_price: string;
+          image: string;
+       }, stockIndex: number) => (
+        // <p key={stockIndex}>{stock.name}</p>
+        <ListingCard
+        key={stockIndex}
         name={data.name}
         ticker_symbol={data.ticker_symbol}
         market_cap={data.grid.data.market_cap}
@@ -50,15 +56,14 @@ const ListingContainer: React.FC<ListingContainerProps> = ({ data }) => {
         share_price={data.grid.data.share_price}
         image={data.grid.data.main_thumb}
       />
-    )
-  );
-
-  console.log(data['data']); //TODO: delete
+      ))}
+    </React.Fragment>
+  ));
 
   return (
     <>
       <ListHeader />
-      <Container>{listItems}</Container>
+      <Container>{content}</Container>
     </>
   );
 };

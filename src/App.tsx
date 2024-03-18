@@ -1,26 +1,37 @@
+import React from 'react';
 import './App.css';
 import { fetchStocks } from './api/stocks/api';
 import ListContainer from './components/listings/List';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 
 function App() {
-  const { data, isLoading, isError } = useQuery<unknown, Error>({
+  const { data, isLoading, isError, error, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ['stocks'],
     queryFn: fetchStocks,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      // console.log({lastPage, allPages});
+      return allPages.length + 1 ;
+      // const nextPage = lastPage.length ? allPages.length : undefined;
+      // console.log({nextPage});
+      // return nextPage; TODO: Bug
+    }
   });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  console.log(data);
 
+  if (isLoading) {
+    return <p>Loading...</p>
+  }
   if (isError) {
-    return <div>Error fetching data</div>;
+    return <p>{error.message}</p>
   }
 
   return (
     <>
-      <ListContainer data={data} />
+      {!isLoading && !isError && <ListContainer data={data} /> }
+      <button style={{margin: '1rem 0'}}disabled={!hasNextPage || isFetchingNextPage} onClick={() => fetchNextPage()}>{isFetchingNextPage ? 'Loading...' : hasNextPage ? 'Load More' : 'Nothing more to load'}</button>
     </>
   );
 }

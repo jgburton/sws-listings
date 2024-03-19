@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import useCountries from "../../hooks/useCountries";
+import useCountries from '../../hooks/useCountries';
 
 const StyledSelect = styled.select`
   width: 150px;
@@ -10,7 +10,11 @@ const StyledSelect = styled.select`
   outline: none;
   margin: 0px;
   padding: 0px;
-  transition: background-color 0.2s ease 0s, box-shadow 0.2s ease 0s, color 0.4s ease 0s, padding 0.4s ease 0s;
+  transition:
+    background-color 0.2s ease 0s,
+    box-shadow 0.2s ease 0s,
+    color 0.4s ease 0s,
+    padding 0.4s ease 0s;
   border: 0px;
   margin: 0px;
   border-radius: 6px;
@@ -25,50 +29,47 @@ const StyledSelect = styled.select`
 `;
 
 export type CountrySelectValue = {
-    flag: string;
-    label: string;
-    value: string;
+  flag: string;
+  label: string;
+  value: string;
 };
 
 interface CountrySelectProps {
-    value?: string;
-    onChange: (value: CountrySelectValue) => void;
+  value?: string;
+  onChange: (value: CountrySelectValue) => void;
 }
 
 const CountrySelect: React.FC<CountrySelectProps> = ({ value, onChange }) => {
-    const { getAll } = useCountries();
-    const [selectedValue, setSelectedValue] = useState<string | undefined>(value);
+  const { getAll } = useCountries();
+  const [selectedValue, setSelectedValue] = useState<string | undefined>(value);
 
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedValue = event.target.value;
-        const selectedOption = getAll().find(option => option.value === selectedValue);
-        if (selectedOption) {
-            onChange(selectedOption);
-        }
-    };
-
-    useEffect(() => {
-        setSelectedValue(value);
-    }, [value]);
-
-    const options = getAll();
-
-    console.log(selectedValue);
-
-    return (
-        <div>
-            <StyledSelect
-                value={selectedValue}
-                onChange={handleChange}
-            >
-                {options.map((option) => (
-                    <option key={option.value} value={option.value}>
-                        {option.flag} {option.label}
-                    </option>
-                ))}
-            </StyledSelect>
-        </div>
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = event.target.value;
+    const selectedOption = getAll().find(
+      (option) => option.value === selectedValue
     );
+    if (selectedOption) {
+      onChange(selectedOption);
+    }
+  };
+
+  useEffect(() => {
+    setSelectedValue(value);
+  }, [value]);
+
+  const options = getAll();
+
+  return (
+    <div>
+      <StyledSelect value={selectedValue} onChange={handleChange}>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.flag} {option.label}
+          </option>
+        ))}
+      </StyledSelect>
+    </div>
+  );
 };
 
 export default CountrySelect;

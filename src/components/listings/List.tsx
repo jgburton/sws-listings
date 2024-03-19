@@ -43,8 +43,11 @@ const ListingContainer: React.FC<ListingContainerProps> = ({
     [marketCapSort, setMarketCapSort, countryName, setCountryName]
   );
 
-  const totalRecords = useMemo(() => data?.pages[0]?.meta.real_total_records, [data]);
-  
+  const totalRecords = useMemo(
+    () => data?.pages[0]?.meta.real_total_records,
+    [data]
+  );
+
   const content = useMemo(() => {
     if (!data) return null;
     return data.pages.flatMap((stocks, pageIndex) =>
@@ -55,7 +58,9 @@ const ListingContainer: React.FC<ListingContainerProps> = ({
           name={data.name}
           tickerSymbol={data.ticker_symbol}
           marketCap={data.grid.data.market_cap}
-          reportingCurrencySymbol={data.grid.data.currency_info.reporting_currency_symbol}
+          reportingCurrencySymbol={
+            data.grid.data.currency_info.reporting_currency_symbol
+          }
           sharePrice={data.grid.data.share_price}
           image={data.grid.data.main_thumb}
         />

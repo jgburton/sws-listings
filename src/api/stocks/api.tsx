@@ -1,16 +1,16 @@
 import { SortingOrder } from '../../types';
 
-// TODO: How to determine number of pages?
 const fetchStocks = async ({
   pageParam,
   marketCapSort = SortingOrder.DESC,
-  countryName = 'ca',
+  countryName = 'CA',
 }: {
   pageParam: number;
   marketCapSort: SortingOrder;
   countryName: string;
 }) => {
-  const offset = pageParam > 1 ? pageParam * 60 : 0;
+  const size = 60;
+  const offset = pageParam > 1 ? pageParam * size : 0;
 
   const response = await fetch(
     `https://simplywall.st/api/grid/filter?include=grid,score&page=${pageParam}`,
@@ -26,7 +26,7 @@ const fetchStocks = async ({
         id: 1,
         no_result_if_limit: false,
         offset: offset,
-        size: 60,
+        size: size,
         state: 'read',
         rules: [
           ['order_by', 'market_cap', marketCapSort],

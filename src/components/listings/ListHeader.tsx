@@ -82,7 +82,7 @@ const ListHeader: React.FC<ListHeaderProps> = ({
   setMarketCapSort,
   countryName,
   setCountryName,
-  totalRecords
+  totalRecords,
 }) => {
   //TODO: could be improved
   const handleMarketCapSortChange = (selectedOption: {
@@ -94,20 +94,20 @@ const ListHeader: React.FC<ListHeaderProps> = ({
       setMarketCapSort(SortingOrder.DESC);
     }
   };
-  
-  const handleCountryFilter = (value : string) => {
+
+  const handleCountryFilter = (value: string) => {
     setCountryName(value);
-  }
+  };
 
   return (
     <HeaderContainer>
       {/* <p>
         <span>CA Market ^</span>&nbsp; &nbsp; <span>Industry ^</span>
       </p> */}
-        <CountrySelect
-          onChange={(value) => handleCountryFilter(value.value)}
-          value={countryName}
-        />
+      <CountrySelect
+        onChange={(value) => handleCountryFilter(value.value)}
+        value={countryName}
+      />
       <Header>Largest Canadian (TSX) Stocks by Market Cap</Header>
       <DateText>
         <span>UPDATED</span> Mar 16, 2024

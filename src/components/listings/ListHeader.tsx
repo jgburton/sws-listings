@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { SortingOrder } from '../../types';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import SortSelect from '../inputs/SortSelect';
+import CountrySelect from '../inputs/CountrySelect';
 
 interface ListHeaderProps {
   marketCapSort: SortingOrder;
@@ -79,8 +80,8 @@ const filterOptions = [
 const ListHeader: React.FC<ListHeaderProps> = ({
   // marketCapSort,
   setMarketCapSort,
-  // countryName,
-  // setCountryName,
+  countryName,
+  setCountryName,
   totalRecords
 }) => {
   //TODO: could be improved
@@ -93,12 +94,20 @@ const ListHeader: React.FC<ListHeaderProps> = ({
       setMarketCapSort(SortingOrder.DESC);
     }
   };
+  
+  const handleCountryFilter = (value : string) => {
+    setCountryName(value);
+  }
 
   return (
     <HeaderContainer>
-      <p>
+      {/* <p>
         <span>CA Market ^</span>&nbsp; &nbsp; <span>Industry ^</span>
-      </p>
+      </p> */}
+        <CountrySelect
+          onChange={(value) => handleCountryFilter(value.value)}
+          value={countryName}
+        />
       <Header>Largest Canadian (TSX) Stocks by Market Cap</Header>
       <DateText>
         <span>UPDATED</span> Mar 16, 2024

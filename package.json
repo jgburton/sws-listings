@@ -19,7 +19,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intersection-observer": "^9.8.1",
-    "styled-components": "^6.1.8"
+    "styled-components": "^6.1.8",
+    "world-countries": "^5.0.0"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.27.7",

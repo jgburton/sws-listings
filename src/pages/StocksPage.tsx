@@ -9,7 +9,7 @@ const StocksPage = () => {
   const [marketCapSort, setMarketCapSort] = useState<SortingOrder>(
     SortingOrder.DESC
   );
-  const [countryName, setCountryName] = useState<string>('ca');
+  const [countryName, setCountryName] = useState<string>('CA');
 
   const sortingProps = {
     marketCapSort,

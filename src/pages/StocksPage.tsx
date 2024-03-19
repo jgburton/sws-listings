@@ -4,6 +4,7 @@ import ListContainer from '../components/listings/List';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 import { SortingOrder } from '../types';
+import SnowFlake from '../components/listings/SnowFlake';
 
 const StocksPage = () => {
   const [marketCapSort, setMarketCapSort] = useState<SortingOrder>(
@@ -67,11 +68,16 @@ const StocksPage = () => {
   if (isError) {
     return <p>{error.message}</p>;
   }
+  const testData = [5,5,5,0,0];
+  const testData2 = [0,0,0,0,5];
+const titles = ['Value', 'Future', 'Past', 'Health', 'Dividend'];
 
   return (
     <>
-      <ListContainer innerRef={ref} data={data} {...sortingProps} />
-      {isFetchingNextPage && <p>Loading...</p>}
+      {/* <ListContainer innerRef={ref} data={data} {...sortingProps} /> */}
+      {/* {isFetchingNextPage && <p>Loading...</p>} */}
+      <SnowFlake data={testData} titles={titles}/>
+      <SnowFlake data={testData2} titles={titles}/>
     </>
   );
 };

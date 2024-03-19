@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { SortingOrder } from '../../types';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import SortSelect from '../inputs/SortSelect';
 import CountrySelect from '../inputs/CountrySelect';
+import { getFormattedDate } from '../../utilities';
 
 interface ListHeaderProps {
   marketCapSort: SortingOrder;
@@ -10,6 +11,7 @@ interface ListHeaderProps {
   countryName: string;
   setCountryName: Dispatch<React.SetStateAction<string>>;
   totalRecords: string;
+  exchangeSymbol: string;
 }
 
 const HeaderContainer = styled.div`
@@ -78,44 +80,47 @@ const filterOptions = [
 ];
 
 const ListHeader: React.FC<ListHeaderProps> = ({
-  // marketCapSort,
+  marketCapSort,
   setMarketCapSort,
   countryName,
   setCountryName,
   totalRecords,
+  exchangeSymbol
 }) => {
-  //TODO: could be improved
-  const handleMarketCapSortChange = (selectedOption: {
-    value: SetStateAction<SortingOrder>;
-  }) => {
-    if (selectedOption.toString() == 'asc') {
-      setMarketCapSort(SortingOrder.ASC);
-    } else {
-      setMarketCapSort(SortingOrder.DESC);
-    }
-  };
+  const formattedDate = getFormattedDate();
+
+  const handleMarketCapSortChange = (selectedOption: SortingOrder): void => {
+    setMarketCapSort(selectedOption);
+  }
 
   const handleCountryFilter = (value: string) => {
     setCountryName(value);
   };
 
+  const getDynamicHeaderText = (): JSX.Element => {
+    const marketCapHeaderText = marketCapSort === SortingOrder.ASC ? 'Small Cap' : 'Largest';
+    const marketCapBodyText = marketCapSort === SortingOrder.ASC ? 'small cap' : 'large cap';
+    return (
+      <>
+        <Header>{`${marketCapHeaderText} ${countryName} (${exchangeSymbol}) Stocks by Market Cap`}</Header>
+        <DateText>
+          <span>UPDATED</span> {formattedDate} 
+        </DateText>
+        <BodyText>
+          {`Discover ${marketCapBodyText} ${countryName} companies that are on the ${exchangeSymbol}. These
+          companies are organised by Market Cap.`}
+        </BodyText>
+      </>
+    );
+  };
+
   return (
     <HeaderContainer>
-      {/* <p>
-        <span>CA Market ^</span>&nbsp; &nbsp; <span>Industry ^</span>
-      </p> */}
       <CountrySelect
         onChange={(value) => handleCountryFilter(value.value)}
         value={countryName}
       />
-      <Header>Largest Canadian (TSX) Stocks by Market Cap</Header>
-      <DateText>
-        <span>UPDATED</span> Mar 16, 2024
-      </DateText>
-      <BodyText>
-        Discover large cap Canadian companies that are on the TSX. These
-        companies are organised by Market Cap.
-      </BodyText>
+      {getDynamicHeaderText()}
       <div className="container">
         <div className="column">
           {' '}
@@ -134,7 +139,3 @@ const ListHeader: React.FC<ListHeaderProps> = ({
 };
 
 export default ListHeader;
-
-// TODO:
-// 1. Implement dropdowns
-// 2. consume data with interface and props etc

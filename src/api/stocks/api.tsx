@@ -9,7 +9,7 @@ const fetchStocks = async ({
   marketCapSort: SortingOrder;
   countryName: string;
 }) => {
-  const size = 60;
+  const size = 40;
   const offset = pageParam > 1 ? pageParam * size : 0;
 
   const response = await fetch(

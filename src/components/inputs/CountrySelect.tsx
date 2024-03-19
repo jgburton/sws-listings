@@ -17,6 +17,7 @@ const StyledSelect = styled.select`
     padding 0.4s ease 0s;
   border: 0px;
   margin: 0px;
+  margin-bottom: 0.5rem;
   border-radius: 6px;
   text-decoration: none;
   font-weight: normal;

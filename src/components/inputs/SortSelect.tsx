@@ -9,7 +9,7 @@ interface SortSelectOption {
 interface SortSelectProps {
   options: SortSelectOption[];
   defaultValue?: string;
-  onChange?: (selectedValue: string) => void; // Corrected type to accept string
+  onChange?: (selectedValue: string) => void; 
 }
 
 const StyledSelect = styled.select`
@@ -20,8 +20,8 @@ const StyledSelect = styled.select`
   border-radius: 8px;
   background: none;
   color: rgba(255, 255, 255, 0.5);
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 `;
 
 const SortSelect: React.FC<SortSelectProps> = ({
@@ -37,7 +37,7 @@ const SortSelect: React.FC<SortSelectProps> = ({
     const newValue = e.target.value;
     setSelectedValue(newValue);
     if (onChange) {
-      onChange(newValue); // Pass the value of the selected option
+      onChange(newValue);
     }
   };
 

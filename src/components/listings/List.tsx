@@ -48,6 +48,13 @@ const ListingContainer: React.FC<ListingContainerProps> = ({
     [data]
   );
 
+  const exchangeSymbol = useMemo(() => {
+    return data?.pages[0]?.data[0]?.exchange_symbol;
+  }, [data]);
+
+  console.log(exchangeSymbol);
+
+
   const content = useMemo(() => {
     if (!data) return null;
     return data.pages.flatMap((stocks, pageIndex) =>
@@ -70,7 +77,7 @@ const ListingContainer: React.FC<ListingContainerProps> = ({
 
   return (
     <>
-      <ListHeader totalRecords={totalRecords} {...sortingProps} />
+      <ListHeader exchangeSymbol={exchangeSymbol} totalRecords={totalRecords} {...sortingProps} />
       <Container>{content}</Container>
     </>
   );

@@ -36,7 +36,7 @@ const StocksPage = () => {
         marketCapSort: marketCapSort,
         countryName: countryName,
       }),
-    initialPageParam: 1,
+    initialPageParam:1,
     getNextPageParam: (lastPage, allPages) => {
       // console.log({lastPage, allPages});
       return allPages.length + 1;
@@ -46,20 +46,13 @@ const StocksPage = () => {
     },
   });
 
-  const handleFilterChange = (
-    marketCapSort: SortingOrder,
-    countryName: string
-  ) => {
+  useEffect(() => {
     refetch({
       throwOnError: false,
       force: true,
       queryKey: ['stocks', { marketCapSort, countryName }],
     });
-  };
-
-  useEffect(() => {
-    handleFilterChange(marketCapSort, countryName);
-  }, [marketCapSort, countryName]);
+  }, [refetch, marketCapSort, countryName]);
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -76,9 +69,7 @@ const StocksPage = () => {
 
   return (
     <>
-      {!isLoading && !isError && (
-        <ListContainer innerRef={ref} data={data} {...sortingProps} />
-      )}
+      <ListContainer innerRef={ref} data={data} {...sortingProps} />
       {isFetchingNextPage && <p>Loading...</p>}
     </>
   );

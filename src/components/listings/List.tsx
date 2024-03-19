@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import ListingCard from './ListingCard';
 import ListHeader from './ListHeader';
-import React, { Dispatch } from 'react';
+import React, { Dispatch, useMemo } from 'react';
 import { SortingOrder } from '../../types';
 
 interface ListingContainerProps {
@@ -42,39 +42,27 @@ const ListingContainer: React.FC<ListingContainerProps> = ({
   };
 
   // TODO: Refine
-  const totalRecords = data?.pages[0].meta.real_total_records;
-  const content = data?.pages.map((stocks, pageIndex) => (
-    <React.Fragment key={pageIndex}>
-      {stocks.data.map(
-        (
-          data: {
-            name: string;
-            ticker_symbol: string;
-            market_cap: string;
-            reporting_currency_symbol: string;
-            share_price: string;
-            image: string;
-          },
-          stockIndex: number
-        ) => {
-          return (
-            <ListingCard
-              innerRef={innerRef}
-              key={stockIndex}
-              name={data.name}
-              ticker_symbol={data.ticker_symbol}
-              market_cap={data.grid.data.market_cap}
-              reporting_currency_symbol={
-                data.grid.data.currency_info.reporting_currency_symbol
-              }
-              share_price={data.grid.data.share_price}
-              image={data.grid.data.main_thumb}
-            />
-          );
-        }
-      )}
-    </React.Fragment>
-  ));
+  const totalRecords = useMemo(() => data?.pages[0].meta.real_total_records, [data]);
+  const content = useMemo(() => {
+    return data?.pages.map((stocks, pageIndex) => (
+      <React.Fragment key={pageIndex}>
+        {stocks.data.map((data, stockIndex) => (
+          <ListingCard
+            innerRef={innerRef}
+            key={stockIndex}
+            name={data.name}
+            tickerSymbol={data.ticker_symbol}
+            marketCap={data.grid.data.market_cap}
+            reportingCurrencySymbol={
+              data.grid.data.currency_info.reporting_currency_symbol
+            }
+            sharePrice={data.grid.data.share_price}
+            image={data.grid.data.main_thumb}
+          />
+        ))}
+      </React.Fragment>
+    ));
+  }, [data, innerRef]);
 
   return (
     <>

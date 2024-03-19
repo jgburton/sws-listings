@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { roundToNearestBillionOrMillion } from '../../utilities';
+import { roundToNearestMillionOrBillion } from '../../utilities';
 
 interface ListingCardProps {
   name: string;
-  ticker_symbol: string;
-  market_cap: string;
-  reporting_currency_symbol: string;
-  share_price: string;
+  tickerSymbol: string;
+  marketCap: string;
+  reportingCurrencySymbol: string;
+  sharePrice: string;
   image: string;
   innerRef: React.Ref<HTMLDivElement>;
 }
@@ -89,14 +89,14 @@ const ChangeInfo = styled.div<{ infovalue: number }>`
 
 const ListingCard: React.FC<ListingCardProps> = ({
   name,
-  ticker_symbol,
-  market_cap,
-  reporting_currency_symbol,
-  share_price,
+  tickerSymbol,
+  marketCap,
+  reportingCurrencySymbol,
+  sharePrice,
   image,
   innerRef,
 }) => {
-  const formatted_market_cap = roundToNearestBillionOrMillion(market_cap);
+  const formatted_market_cap = roundToNearestMillionOrBillion(marketCap);
 
   return (
     <Container ref={innerRef} key={name}>
@@ -104,7 +104,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
         <LogoWrapper>
           <p className="stock-name">{name}</p>
           <p className="stock-price">
-            {reporting_currency_symbol + formatted_market_cap}
+            {`${reportingCurrencySymbol}${formatted_market_cap}`}
           </p>
         </LogoWrapper>
         <LogoWrapper>
@@ -114,8 +114,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
       <CompanyData>
         <StockInfo>
           <div className="StockInfoSummary">
-            <p className="title">{ticker_symbol}</p>
-            <p className="info">{reporting_currency_symbol + share_price}</p>
+            <p className="title">{tickerSymbol}</p>
+            <p className="info">{`${reportingCurrencySymbol}${sharePrice}`}</p>
           </div>
           <ChangeInfo infovalue={-3.5}>
             <p className="title">7D</p>

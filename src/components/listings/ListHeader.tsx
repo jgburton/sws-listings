@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Dropdown from '../inputs/DropDown';
 import { SortingOrder } from '../../types';
 import { Dispatch, SetStateAction } from 'react';
+import SortSelect from '../inputs/SortSelect';
 
 interface ListHeaderProps {
   marketCapSort: SortingOrder;
@@ -110,7 +110,7 @@ const ListHeader: React.FC<ListHeaderProps> = ({
       <div className="container">
         <div className="column">
           {' '}
-          <Dropdown
+          <SortSelect
             options={filterOptions}
             onChange={handleMarketCapSortChange}
           />

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-interface DropdownOption {
+interface SortSelectOption {
   value: string;
   label: string;
 }
 
-interface DropdownProps {
-  options: DropdownOption[];
+interface SortSelectProps {
+  options: SortSelectOption[];
   defaultValue?: string;
   onChange?: (selectedValue: string) => void; // Corrected type to accept string
 }
@@ -24,7 +24,7 @@ const StyledSelect = styled.select`
   padding: 0px;
 `;
 
-const Dropdown: React.FC<DropdownProps> = ({
+const SortSelect: React.FC<SortSelectProps> = ({
   options,
   defaultValue,
   onChange,
@@ -54,4 +54,4 @@ const Dropdown: React.FC<DropdownProps> = ({
   );
 };
 
-export default Dropdown;
+export default SortSelect;

@@ -5,9 +5,8 @@ import React, { Dispatch, useMemo } from 'react';
 import { SortingOrder } from '../../types';
 
 interface ListingContainerProps {
-  data: unknown;
+  data?: { pages: { data: any[] }[] };
   innerRef: React.Ref<HTMLDivElement>;
-
   marketCapSort: SortingOrder;
   setMarketCapSort: Dispatch<React.SetStateAction<SortingOrder>>;
   countryName: string;
@@ -34,34 +33,34 @@ const ListingContainer: React.FC<ListingContainerProps> = ({
   countryName,
   setCountryName,
 }) => {
-  const sortingProps = {
-    marketCapSort,
-    setMarketCapSort,
-    countryName,
-    setCountryName,
-  };
+  const sortingProps = useMemo(
+    () => ({
+      marketCapSort,
+      setMarketCapSort,
+      countryName,
+      setCountryName,
+    }),
+    [marketCapSort, setMarketCapSort, countryName, setCountryName]
+  );
 
-  // TODO: Refine
-  const totalRecords = useMemo(() => data?.pages[0].meta.real_total_records, [data]);
+  const totalRecords = useMemo(() => data?.pages[0]?.meta.real_total_records, [data]);
+  
   const content = useMemo(() => {
-    return data?.pages.map((stocks, pageIndex) => (
-      <React.Fragment key={pageIndex}>
-        {stocks.data.map((data, stockIndex) => (
-          <ListingCard
-            innerRef={innerRef}
-            key={stockIndex}
-            name={data.name}
-            tickerSymbol={data.ticker_symbol}
-            marketCap={data.grid.data.market_cap}
-            reportingCurrencySymbol={
-              data.grid.data.currency_info.reporting_currency_symbol
-            }
-            sharePrice={data.grid.data.share_price}
-            image={data.grid.data.main_thumb}
-          />
-        ))}
-      </React.Fragment>
-    ));
+    if (!data) return null;
+    return data.pages.flatMap((stocks, pageIndex) =>
+      stocks.data.map((data, stockIndex) => (
+        <ListingCard
+          innerRef={innerRef}
+          key={`${pageIndex}-${stockIndex}`}
+          name={data.name}
+          tickerSymbol={data.ticker_symbol}
+          marketCap={data.grid.data.market_cap}
+          reportingCurrencySymbol={data.grid.data.currency_info.reporting_currency_symbol}
+          sharePrice={data.grid.data.share_price}
+          image={data.grid.data.main_thumb}
+        />
+      ))
+    );
   }, [data, innerRef]);
 
   return (

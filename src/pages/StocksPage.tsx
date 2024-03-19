@@ -38,11 +38,8 @@ const StocksPage = () => {
       }),
     initialPageParam:1,
     getNextPageParam: (lastPage, allPages) => {
-      // console.log({lastPage, allPages});
-      return allPages.length + 1;
-      // const nextPage = lastPage.length ? allPages.length : undefined;
-      // console.log({nextPage});
-      // return nextPage; TODO: Bug
+      const nextPage = lastPage.data.length ? allPages.length : undefined;
+      return nextPage; 
     },
   });
 
@@ -83,6 +80,6 @@ export default StocksPage;
 // 3. Ensure the ref is the last item not a p tag - DONE
 // 5. Implement filter by market cap api integration - DONE
 
-// 4. Find out how many pages there are and why this breaks with the commented out logic
+// 4. Find out how many pages there are and why this breaks with the commented out logic - DONE 
 // 6. Implement filter by country ui & api integration
 // 5. Data visulisation shapes ?

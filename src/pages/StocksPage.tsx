@@ -68,8 +68,9 @@ const StocksPage = () => {
   if (isError) {
     return <p>{error.message}</p>;
   }
-  const testData = [5,5,5,0,0];
-  const testData2 = [0,0,0,0,5];
+  const testData = [0,3,3,2,5];
+  const testData2 = [5,5,4,3,0];
+  const testData3 = [0,0,0,0,0];
 const titles = ['Value', 'Future', 'Past', 'Health', 'Dividend'];
 
   return (
@@ -78,6 +79,7 @@ const titles = ['Value', 'Future', 'Past', 'Health', 'Dividend'];
       {/* {isFetchingNextPage && <p>Loading...</p>} */}
       <SnowFlake data={testData} titles={titles}/>
       <SnowFlake data={testData2} titles={titles}/>
+      <SnowFlake data={testData3} titles={titles}/>
     </>
   );
 };

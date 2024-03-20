@@ -85,26 +85,28 @@ const ListHeader: React.FC<ListHeaderProps> = ({
   countryName,
   setCountryName,
   totalRecords,
-  exchangeSymbol
+  exchangeSymbol,
 }) => {
   const formattedDate = getFormattedDate();
 
   const handleMarketCapSortChange = (selectedOption: SortingOrder): void => {
     setMarketCapSort(selectedOption);
-  }
+  };
 
   const handleCountryFilter = (value: string) => {
     setCountryName(value);
   };
 
   const getDynamicHeaderText = (): JSX.Element => {
-    const marketCapHeaderText = marketCapSort === SortingOrder.ASC ? 'Small Cap' : 'Largest';
-    const marketCapBodyText = marketCapSort === SortingOrder.ASC ? 'small cap' : 'large cap';
+    const marketCapHeaderText =
+      marketCapSort === SortingOrder.ASC ? 'Small Cap' : 'Largest';
+    const marketCapBodyText =
+      marketCapSort === SortingOrder.ASC ? 'small cap' : 'large cap';
     return (
       <>
         <Header>{`${marketCapHeaderText} ${countryName} (${exchangeSymbol}) Stocks by Market Cap`}</Header>
         <DateText>
-          <span>UPDATED</span> {formattedDate} 
+          <span>UPDATED</span> {formattedDate}
         </DateText>
         <BodyText>
           {`Discover ${marketCapBodyText} ${countryName} companies that are on the ${exchangeSymbol}. These

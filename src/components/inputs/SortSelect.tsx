@@ -9,7 +9,7 @@ interface SortSelectOption {
 interface SortSelectProps {
   options: SortSelectOption[];
   defaultValue?: string;
-  onChange?: (selectedValue: string) => void; 
+  onChange?: (selectedValue: string) => void;
 }
 
 const StyledSelect = styled.select`

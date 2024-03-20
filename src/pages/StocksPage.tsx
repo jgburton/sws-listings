@@ -4,13 +4,12 @@ import ListContainer from '../components/listings/List';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 import { SortingOrder } from '../types';
-import SnowFlake from '../components/listings/SnowFlake';
 
 const StocksPage = () => {
   const [marketCapSort, setMarketCapSort] = useState<SortingOrder>(
     SortingOrder.DESC
   );
-  const [countryName, setCountryName] = useState<string>('CA');
+  const [countryName, setCountryName] = useState<string>('CA'); // temporary, perhaps nice to use geolocation
 
   const sortingProps = {
     marketCapSort,
@@ -68,30 +67,13 @@ const StocksPage = () => {
   if (isError) {
     return <p>{error.message}</p>;
   }
-  const testData = [0,3,3,2,5];
-  const testData2 = [5,5,4,3,0];
-  const testData3 = [0,0,0,0,0];
-const titles = ['Value', 'Future', 'Past', 'Health', 'Dividend'];
 
   return (
     <>
-      {/* <ListContainer innerRef={ref} data={data} {...sortingProps} /> */}
-      {/* {isFetchingNextPage && <p>Loading...</p>} */}
-      <SnowFlake data={testData} titles={titles}/>
-      <SnowFlake data={testData2} titles={titles}/>
-      <SnowFlake data={testData3} titles={titles}/>
+      <ListContainer innerRef={ref} data={data} {...sortingProps} />
+      {isFetchingNextPage && <p>Loading...</p>}
     </>
   );
 };
 
 export default StocksPage;
-
-// TODO: post run
-// 1. Move above logic etc to stocks page - DONE
-// 2.Tidy up code - DONE
-// 3. Ensure the ref is the last item not a p tag - DONE
-// 5. Implement filter by market cap api integration - DONE
-
-// 4. Find out how many pages there are and why this breaks with the commented out logic - DONE
-// 6. Implement filter by country ui & api integration
-// 5. Data visulisation shapes ?

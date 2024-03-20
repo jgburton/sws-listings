@@ -1,3 +1,14 @@
+
+## Considerations for improvments for SWS-Listings with more time
+
+- Testing jest unit testing, cypress end to end 
+- i18n transaltions 
+- fine styling, more detail etc
+- performance optimisation and refactoring using lighthouse
+- Add filter for world
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

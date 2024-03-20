@@ -1,5 +1,10 @@
 import styled from 'styled-components';
-import { roundToNearestMillionOrBillion } from '../../utilities';
+import {
+  ScoreData,
+  createUsefulScoreData,
+  roundToNearestMillionOrBillion,
+} from '../../utilities';
+import SnowFlake from './SnowFlake';
 
 interface ListingCardProps {
   name: string;
@@ -9,6 +14,7 @@ interface ListingCardProps {
   sharePrice: string;
   image: string;
   innerRef: React.Ref<HTMLDivElement>;
+  scoreData: ScoreData;
 }
 
 const Container = styled.div`
@@ -79,6 +85,16 @@ const StockInfo = styled.div`
   }
 `;
 
+const CenteredDiv = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Translate it back by 50% of its own width and height */
+`;
+
 const ChangeInfo = styled.div<{ infovalue: number }>`
   margin-right: 20px;
 
@@ -95,8 +111,10 @@ const ListingCard: React.FC<ListingCardProps> = ({
   sharePrice,
   image,
   innerRef,
+  scoreData,
 }) => {
-  const formatted_market_cap = roundToNearestMillionOrBillion(marketCap);
+  const formattedMarketCap = roundToNearestMillionOrBillion(marketCap);
+  const usefulScoreData = createUsefulScoreData(scoreData);
 
   return (
     <Container ref={innerRef} key={name}>
@@ -104,12 +122,16 @@ const ListingCard: React.FC<ListingCardProps> = ({
         <LogoWrapper>
           <p className="stock-name">{name}</p>
           <p className="stock-price">
-            {`${reportingCurrencySymbol}${formatted_market_cap}`}
+            {`${reportingCurrencySymbol}${formattedMarketCap}`}
           </p>
         </LogoWrapper>
         <LogoWrapper>
           <LogoCanvas image={image} width="560" height="560" />
         </LogoWrapper>
+        <CenteredDiv>
+          {/* <SnowFlake data={testData} titles={titles}/> */}
+          <SnowFlake data={usefulScoreData} />
+        </CenteredDiv>
       </CompanyInfo>
       <CompanyData>
         <StockInfo>

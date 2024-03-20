@@ -52,9 +52,6 @@ const ListingContainer: React.FC<ListingContainerProps> = ({
     return data?.pages[0]?.data[0]?.exchange_symbol;
   }, [data]);
 
-  console.log(exchangeSymbol);
-
-
   const content = useMemo(() => {
     if (!data) return null;
     return data.pages.flatMap((stocks, pageIndex) =>
@@ -70,6 +67,7 @@ const ListingContainer: React.FC<ListingContainerProps> = ({
           }
           sharePrice={data.grid.data.share_price}
           image={data.grid.data.main_thumb}
+          scoreData={data.score.data}
         />
       ))
     );
@@ -77,7 +75,11 @@ const ListingContainer: React.FC<ListingContainerProps> = ({
 
   return (
     <>
-      <ListHeader exchangeSymbol={exchangeSymbol} totalRecords={totalRecords} {...sortingProps} />
+      <ListHeader
+        exchangeSymbol={exchangeSymbol}
+        totalRecords={totalRecords}
+        {...sortingProps}
+      />
       <Container>{content}</Container>
     </>
   );

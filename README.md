@@ -1,13 +1,14 @@
+## Considerations for improvements for SWS-Listings with more time
 
-## Considerations for improvments for SWS-Listings with more time
+If I had more time to spend on this, I would consider the following:
 
-- Testing jest unit testing, cypress end to end 
-- i18n transaltions 
-- fine styling, more detail etc
-- performance optimisation and refactoring using lighthouse
-- Add filter for world
+- Further Performance, accessibility, and SEO audit using Lighthouse
+- i18n translations
+- Fine styling, there are various discrepancies in the UI
+- Implement testing, Jest/React Testing Library for unit testing, and perhaps Cypress for end-to-end testing
+- Explore the benefits in performance and SEO for server side rendering 
 
-
+Thank you for your consideration. Jamie
 
 # React + TypeScript + Vite
 

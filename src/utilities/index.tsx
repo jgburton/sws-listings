@@ -1,6 +1,7 @@
+import { ScoreData } from '../types';
+
 // Round to nearest million or billion
-export const roundToNearestMillionOrBillion = (num: string) => {
-  const number = parseInt(num);
+export const roundToNearestMillionOrBillion = (number: number) => {
   switch (true) {
     case Math.abs(number) >= 1e9:
       return Math.round((number / 1e9) * 10) / 10 + 'b';
@@ -18,19 +19,7 @@ export const getFormattedDate = (): string => {
   return currentDate.toLocaleDateString('en-US', options);
 };
 
-export interface ScoreData {
-  value: number;
-  income: number;
-  health: number;
-  past: number;
-  future: number;
-  management: number;
-  misc: number;
-  total: number;
-  sentence: string;
-}
-
-// Create useful score data for snowflake
+// Create useful score data for snowflake, for ui
 export const createUsefulScoreData = (
   data: ScoreData
 ): { [key: string]: number } => {

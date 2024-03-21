@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import ListingCard from './ListingCard';
 import ListHeader from './ListHeader';
 import React, { Dispatch, useMemo } from 'react';
-import { SortingOrder } from '../../types';
+import { CompanyData, SortingOrder } from '../../types';
 
 interface ListingContainerProps {
-  data?: { pages: { data: any[] }[] };
+  data?: { pages: { data: CompanyData[] }[] };
   innerRef: React.Ref<HTMLDivElement>;
   marketCapSort: SortingOrder;
   setMarketCapSort: Dispatch<React.SetStateAction<SortingOrder>>;
@@ -76,7 +76,7 @@ const ListingContainer: React.FC<ListingContainerProps> = ({
   return (
     <>
       <ListHeader
-        exchangeSymbol={exchangeSymbol}
+        exchangeSymbol={exchangeSymbol || ''}
         totalRecords={totalRecords}
         {...sortingProps}
       />

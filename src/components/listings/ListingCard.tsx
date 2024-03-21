@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 import {
-  ScoreData,
   createUsefulScoreData,
   roundToNearestMillionOrBillion,
 } from '../../utilities';
 import SnowFlake from './SnowFlake';
+import { ScoreData } from '../../types';
 
 interface ListingCardProps {
   name: string;
   tickerSymbol: string;
-  marketCap: string;
+  marketCap: number;
   reportingCurrencySymbol: string;
-  sharePrice: string;
+  sharePrice: number;
   image: string;
   innerRef: React.Ref<HTMLDivElement>;
   scoreData: ScoreData;
@@ -51,7 +51,7 @@ const LogoWrapper = styled.div`
   }
 `;
 
-const LogoCanvas = styled.canvas<{ image: string }>`
+const LogoImage = styled.img<{ image: string }>`
   background-image: url(${(props) => props.image});
   background-size: cover;
   background-position: center;
@@ -126,10 +126,15 @@ const ListingCard: React.FC<ListingCardProps> = ({
           </p>
         </LogoWrapper>
         <LogoWrapper>
-          <LogoCanvas image={image} width="560" height="560" />
+          <LogoImage
+            alt={`${name}-background-image`}
+            loading="lazy"
+            image={image}
+            width="560"
+            height="560"
+          />
         </LogoWrapper>
         <CenteredDiv>
-          {/* <SnowFlake data={testData} titles={titles}/> */}
           <SnowFlake data={usefulScoreData} />
         </CenteredDiv>
       </CompanyInfo>

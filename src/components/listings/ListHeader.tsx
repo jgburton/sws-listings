@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { SortingOrder } from '../../types';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch } from 'react';
 import SortSelect from '../inputs/SortSelect';
 import CountrySelect from '../inputs/CountrySelect';
 import { getFormattedDate } from '../../utilities';
@@ -10,7 +10,7 @@ interface ListHeaderProps {
   setMarketCapSort: Dispatch<React.SetStateAction<SortingOrder>>;
   countryName: string;
   setCountryName: Dispatch<React.SetStateAction<string>>;
-  totalRecords: string;
+  totalRecords: number;
   exchangeSymbol: string;
 }
 

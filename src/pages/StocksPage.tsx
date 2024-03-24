@@ -3,7 +3,7 @@ import { fetchStocks } from '../api/stocks/api';
 import ListContainer from '../components/listings/List';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
-import { SortingOrder } from '../types';
+import { CompanyData, SortingOrder } from '../types';
 
 const StocksPage = () => {
   const [marketCapSort, setMarketCapSort] = useState<SortingOrder>(
@@ -70,7 +70,7 @@ const StocksPage = () => {
 
   return (
     <>
-      <ListContainer innerRef={ref} data={data} {...sortingProps} />
+      <ListContainer innerRef={ref} data={data as CompanyData} {...sortingProps} />
       {isFetchingNextPage && <p>Loading...</p>}
     </>
   );

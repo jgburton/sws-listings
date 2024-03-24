@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { SortingOrder } from '../../types';
 
 interface SortSelectOption {
   value: string;
@@ -9,7 +10,7 @@ interface SortSelectOption {
 interface SortSelectProps {
   options: SortSelectOption[];
   defaultValue?: string;
-  onChange?: (selectedValue: string) => void;
+  onChange?: ((selectedValue: SortingOrder) => void) | undefined;
 }
 
 const StyledSelect = styled.select`
@@ -37,7 +38,7 @@ const SortSelect: React.FC<SortSelectProps> = ({
     const newValue = e.target.value;
     setSelectedValue(newValue);
     if (onChange) {
-      onChange(newValue);
+      onChange(newValue as SortingOrder);
     }
   };
 

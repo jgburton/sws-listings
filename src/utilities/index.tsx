@@ -33,7 +33,7 @@ export const createUsefulScoreData = (
       // Handle 'income' key representing 'Dividend' for the UI
       usefulScoreData[key] = data['income'];
     } else {
-      usefulScoreData[key] = data[key.toLowerCase()];
+      usefulScoreData[key] = data[key.toLowerCase() as keyof ScoreData];
     }
   });
 

@@ -5,7 +5,7 @@ import React, { Dispatch, useMemo } from 'react';
 import { CompanyData, SortingOrder } from '../../types';
 
 interface ListingContainerProps {
-  data?: { pages: { data: CompanyData[] }[] };
+  data: CompanyData;
   innerRef: React.Ref<HTMLDivElement>;
   marketCapSort: SortingOrder;
   setMarketCapSort: Dispatch<React.SetStateAction<SortingOrder>>;

@@ -27,3 +27,13 @@ export default App;
 // Testing practices - TODO:
 // a11y - TODO:
 // i18n readiness - TODO:
+
+
+// TODO: Post Feedback
+// Fix all errors (10 errors, 5 files) - TODO:
+
+// 1  src/components/listings/List.tsx:47
+// 1  src/components/listings/ListHeader.tsx:3
+// 5  src/components/listings/SnowFlake.tsx:57
+// 1  src/pages/StocksPage.tsx:51
+// 2  src/utilities/index.tsx:19

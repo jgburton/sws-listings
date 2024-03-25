@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchStocks } from '../api/stocks/api';
 import ListContainer from '../components/listings/List';
 import { useInfiniteQuery } from '@tanstack/react-query';

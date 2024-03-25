@@ -48,7 +48,7 @@ const StocksPage = () => {
   useEffect(() => {
     refetch({
       throwOnError: false,
-      force: true,
+      forceFetch: true,
       queryKey: ['stocks', { marketCapSort, countryName }],
     });
   }, [refetch, marketCapSort, countryName]);

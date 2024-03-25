@@ -21,9 +21,9 @@ const DataBlobVisualization: React.FC<Props> = ({ data }) => {
 
     // Define circle properties
     const circleRadius: number = 60;
-    const numSegments: number = titles.length; // Use the number of titles for segments
+    const numSegments: number = titles.length; 
     const circleCenter: [number, number] = [200, 200];
-    const maxData: number = 5; // Maximum value for the data
+    const maxData: number = 5;
 
     // Calculate radius based on data value
     const calculateRadius = (dataPoint: number): number => {
@@ -51,56 +51,54 @@ const DataBlobVisualization: React.FC<Props> = ({ data }) => {
       return [x, y];
     });
 
-    // Calculate the position of titles with padding
-    const titlePadding: number = 10; // Padding between the circle edge and title
-    const titleAngleOffset: number = -Math.PI / 2; // Offset to start titles at the top
-    const titlePosition: [number, number][] = points.map(([x, y], i) => {
-      const angle: number = (i / numSegments) * Math.PI * 2 + titleAngleOffset;
-      const radius: number = calculateRadius(maxData + 1); // Calculate radius for outermost circle
-      const newX: number =
-        circleCenter[0] + (radius + titlePadding) * Math.cos(angle); // Add padding to the radius
-      const newY: number =
-        circleCenter[1] + (radius + titlePadding) * Math.sin(angle); // Add padding to the radius
-      return [newX, newY];
-    });
+// Calculate the position of titles with padding
+const titlePadding: number = 10;
+const titleAngleOffset: number = -Math.PI / 2;
+const titlePosition: [number, number][] = points.map((_, i) => {
+  const angle: number = (i / numSegments) * Math.PI * 2 + titleAngleOffset;
+  const radius: number = calculateRadius(maxData + 1);
+  const newX: number =
+    circleCenter[0] + (radius + titlePadding) * Math.cos(angle);
+  const newY: number =
+    circleCenter[1] + (radius + titlePadding) * Math.sin(angle);
+  return [newX, newY];
+});
 
-    // Draw titles
-    svg
-      .selectAll('.title')
-      .data(titles)
-      .enter()
-      .append('text')
-      .attr('class', 'title')
-      .attr('x', (d, i) => titlePosition[i][0])
-      .attr('y', (d, i) => titlePosition[i][1])
-      .attr('text-anchor', 'middle')
-      .attr('alignment-baseline', 'middle')
-      .text((d) => d)
-      .attr('fill', 'white')
-      .attr('font-size', '12px')
-      .attr('transform', (d, i) => {
-        // Calculate rotation angle
-        const angle: number = (i / numSegments) * 360;
-        // Apply rotation transformation
-        return `rotate(${angle}, ${titlePosition[i][0]}, ${titlePosition[i][1]})`;
-      });
+// Draw titles
+svg
+  .selectAll('.title')
+  .data(titles)
+  .enter()
+  .append('text')
+  .attr('class', 'title')
+  .attr('x', (_, i) => titlePosition[i][0]) // Use direct access to the array elements
+  .attr('y', (_, i) => titlePosition[i][1]) // Use direct access to the array elements
+  .attr('text-anchor', 'middle')
+  .attr('alignment-baseline', 'middle')
+  .text((d) => d)
+  .attr('fill', 'white')
+  .attr('font-size', '12px')
+  .attr('transform', (_, i) => { // Remove unused 'd'
+    const angle: number = (i / numSegments) * 360;
+    return `rotate(${angle}, ${titlePosition[i][0]}, ${titlePosition[i][1]})`;
+  });
 
-    // Draw data blob
-    const dataBlob = d3
-      .line()
-      .x((d) => d[0])
-      .y((d) => d[1])
-      .curve(d3.curveCardinalClosed.tension(0.5)); // Adjust the curve interpolation method
+// Draw data blob
+const dataBlob = d3
+  .line()
+  .x((d) => d[0])
+  .y((d) => d[1])
+  .curve(d3.curveCardinalClosed.tension(0.5));
 
-    const dataBlobPoints: [number, number][] = points.map(([x, y], i) => {
-      const angleOffset: number = -Math.PI / 2;
-      const angle: number = (i / numSegments) * Math.PI * 2 + angleOffset; // Offset to match titles starting at the top
-      const radius: number = calculateRadius(newData[i]); // Use calculated radius based on data value
-      return [
-        circleCenter[0] + radius * Math.cos(angle),
-        circleCenter[1] + radius * Math.sin(angle),
-      ];
-    });
+const dataBlobPoints: [number, number][] = points.map((_, i) => {
+  const angleOffset: number = -Math.PI / 2;
+  const angle: number = (i / numSegments) * Math.PI * 2 + angleOffset;
+  const radius: number = calculateRadius(newData[i]);
+  return [
+    circleCenter[0] + radius * Math.cos(angle),
+    circleCenter[1] + radius * Math.sin(angle),
+  ];
+});
 
     // TODO: Calculate average, , logic can be more specific based on criteria - perhaps total score?
     const average: number =

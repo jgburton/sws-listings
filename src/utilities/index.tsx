@@ -1,4 +1,4 @@
-import { ScoreData } from '../types';
+import { DateTimeFormatOptions, ScoreData } from '../types';
 
 // Round to nearest million or billion
 export const roundToNearestMillionOrBillion = (number: number) => {
@@ -13,9 +13,15 @@ export const roundToNearestMillionOrBillion = (number: number) => {
 };
 
 // Get todays date - temp
+// export const getFormattedDate = (): string => {
+//   const currentDate = new Date();
+//   const options = { month: 'short', day: '2-digit', year: 'numeric' };
+//   return currentDate.toLocaleDateString('en-US', options);
+// };
+
 export const getFormattedDate = (): string => {
   const currentDate = new Date();
-  const options = { month: 'short', day: '2-digit', year: 'numeric' };
+  const options: DateTimeFormatOptions = { month: 'short', day: '2-digit', year: 'numeric' };
   return currentDate.toLocaleDateString('en-US', options);
 };
 

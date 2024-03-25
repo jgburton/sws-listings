@@ -12,7 +12,7 @@ export interface ScoreData {
   management: number;
   misc: number;
   total: number;
-  sentence: string;
+  // sentence: string;
 }
 
 interface Score {

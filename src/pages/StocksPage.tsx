@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { fetchStocks } from '../api/stocks/api';
 import ListContainer from '../components/listings/List';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -48,8 +48,8 @@ const StocksPage = () => {
   useEffect(() => {
     refetch({
       throwOnError: false,
-      forceFetch: true,
-      queryKey: ['stocks', { marketCapSort, countryName }],
+      // force: true,
+      // queryKey: ['stocks', { marketCapSort, countryName }],
     });
   }, [refetch, marketCapSort, countryName]);
 

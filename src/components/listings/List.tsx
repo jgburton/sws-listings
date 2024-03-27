@@ -54,11 +54,11 @@ const ListingContainer: React.FC<ListingContainerProps> = ({
 
   const content = useMemo(() => {
     if (!data) return null;
-    return data.pages.flatMap((stocks, pageIndex) =>
-      stocks.data.map((data, stockIndex) => (
+    return data.pages.flatMap((stocks) =>
+      stocks.data.map((data) => (
         <ListingCard
           innerRef={innerRef}
-          key={`${pageIndex}-${stockIndex}`}
+          key={`${data.id}`}
           name={data.name}
           tickerSymbol={data.ticker_symbol}
           marketCap={data.grid.data.market_cap}

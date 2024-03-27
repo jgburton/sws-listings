@@ -21,7 +21,11 @@ export const roundToNearestMillionOrBillion = (number: number) => {
 
 export const getFormattedDate = (): string => {
   const currentDate = new Date();
-  const options: DateTimeFormatOptions = { month: 'short', day: '2-digit', year: 'numeric' };
+  const options: DateTimeFormatOptions = {
+    month: 'short',
+    day: '2-digit',
+    year: 'numeric',
+  };
   return currentDate.toLocaleDateString('en-US', options);
 };
 

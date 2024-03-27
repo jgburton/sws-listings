@@ -5,6 +5,7 @@ import {
 } from '../../utilities';
 import SnowFlake from './SnowFlake';
 import { ScoreData } from '../../types';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 interface ListingCardProps {
   name: string;
@@ -13,7 +14,7 @@ interface ListingCardProps {
   reportingCurrencySymbol: string;
   sharePrice: number;
   image: string;
-  innerRef: React.Ref<HTMLDivElement>;
+  innerRef?: React.Ref<HTMLDivElement>;
   scoreData: ScoreData;
 }
 
@@ -51,7 +52,7 @@ const LogoWrapper = styled.div`
   }
 `;
 
-const LogoImage = styled.img<{ image: string }>`
+const LogoImage = styled(LazyLoadImage)<{ image: string }>`
   background-image: url(${(props) => props.image});
   background-size: cover;
   background-position: center;
@@ -128,10 +129,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
         <LogoWrapper>
           <LogoImage
             alt={`${name}-background-image`}
-            loading="lazy"
+            height={310}
             image={image}
-            width="560"
-            height="560"
+            width={310}
           />
         </LogoWrapper>
         <CenteredDiv>

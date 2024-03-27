@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { SortingOrder } from '../../types';
-import { Dispatch } from 'react';
+import { Dispatch, useMemo } from 'react';
 import SortSelect from '../inputs/SortSelect';
 import CountrySelect from '../inputs/CountrySelect';
 import { getFormattedDate } from '../../utilities';
@@ -97,23 +97,27 @@ const ListHeader: React.FC<ListHeaderProps> = ({
     setCountryName(value);
   };
 
-  const getDynamicHeaderText = (): JSX.Element => {
-    const marketCapHeaderText =
-      marketCapSort === SortingOrder.ASC ? 'Small Cap' : 'Largest';
-    const marketCapBodyText =
-      marketCapSort === SortingOrder.ASC ? 'small cap' : 'large cap';
-    return (
-      <>
-        <Header>{`${marketCapHeaderText} ${countryName} (${exchangeSymbol}) Stocks by Market Cap`}</Header>
-        <DateText>
-          <span>UPDATED</span> {formattedDate}
-        </DateText>
-        <BodyText>
-          {`Discover ${marketCapBodyText} ${countryName} companies that are on the ${exchangeSymbol}. These
-          companies are organised by Market Cap.`}
-        </BodyText>
-      </>
-    );
+  const DynamicHeaderText = (): JSX.Element => {
+    const memoizedHeader = useMemo(() => {
+      const marketCapHeaderText =
+        marketCapSort === SortingOrder.ASC ? 'Small Cap' : 'Largest';
+      const marketCapBodyText =
+        marketCapSort === SortingOrder.ASC ? 'small cap' : 'large cap';
+      const headerText = `${marketCapHeaderText} ${countryName} (${exchangeSymbol}) Stocks by Market Cap`;
+      const bodyText = `Discover ${marketCapBodyText} ${countryName} companies that are on the ${exchangeSymbol}. These companies are organised by Market Cap.`;
+
+      return (
+        <>
+          <Header>{headerText}</Header>
+          <DateText>
+            <span>UPDATED</span> {formattedDate}
+          </DateText>
+          <BodyText>{bodyText}</BodyText>
+        </>
+      );
+    }, [marketCapSort, countryName, exchangeSymbol, formattedDate]);
+
+    return memoizedHeader;
   };
 
   return (
@@ -122,10 +126,9 @@ const ListHeader: React.FC<ListHeaderProps> = ({
         onChange={(value) => handleCountryFilter(value.value)}
         value={countryName}
       />
-      {getDynamicHeaderText()}
+      {DynamicHeaderText()}
       <div className="container">
         <div className="column">
-          {' '}
           <SortSelect
             options={filterOptions}
             onChange={handleMarketCapSortChange}

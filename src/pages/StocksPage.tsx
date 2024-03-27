@@ -58,6 +58,7 @@ const StocksPage = () => {
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
+      console.log("Fire");
     }
   }, [inView, hasNextPage, fetchNextPage]);
 
@@ -70,7 +71,11 @@ const StocksPage = () => {
 
   return (
     <>
-      <ListContainer innerRef={ref} data={data as CompanyData} {...sortingProps} />
+      <ListContainer
+        innerRef={ref}
+        data={data as CompanyData}
+        {...sortingProps}
+      />
       {isFetchingNextPage && <p>Loading...</p>}
     </>
   );

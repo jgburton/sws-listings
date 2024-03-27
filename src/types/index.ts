@@ -104,7 +104,6 @@ export interface CompanyData {
   pageParams: number[];
 }
 
-
 export interface DateTimeFormatOptions {
   localeMatcher?: 'best fit' | 'lookup';
   weekday?: 'long' | 'short' | 'narrow';

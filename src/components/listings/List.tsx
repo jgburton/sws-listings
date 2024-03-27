@@ -44,39 +44,42 @@ const ListingContainer: React.FC<ListingContainerProps> = ({
   );
 
   const totalRecords = useMemo(
-    () => data?.pages[0]?.meta.real_total_records,
+    () => data?.pages[0]?.meta.real_total_records || 0,
     [data]
   );
 
-  const exchangeSymbol = useMemo(() => {
-    return data?.pages[0]?.data[0]?.exchange_symbol;
-  }, [data]);
+  const exchangeSymbol = useMemo(
+    () => data?.pages[0]?.data[0]?.exchange_symbol || '',
+    [data]
+  );
 
   const content = useMemo(() => {
     if (!data) return null;
-    return data.pages.flatMap((stocks, pageIndex) =>
-      stocks.data.map((data, stockIndex) => (
-        <ListingCard
-          innerRef={innerRef}
-          key={`${pageIndex}-${stockIndex}`}
-          name={data.name}
-          tickerSymbol={data.ticker_symbol}
-          marketCap={data.grid.data.market_cap}
-          reportingCurrencySymbol={
-            data.grid.data.currency_info.reporting_currency_symbol
-          }
-          sharePrice={data.grid.data.share_price}
-          image={data.grid.data.main_thumb}
-          scoreData={data.score.data}
-        />
-      ))
+    return data.pages.flatMap((stocks) =>
+      stocks.data.map((data, index) => {
+        return (
+          <ListingCard
+            innerRef={index >= stocks.data.length - 12 ? innerRef : null}
+            key={data.id}
+            name={data.name}
+            tickerSymbol={data.ticker_symbol}
+            marketCap={data.grid?.data?.market_cap}
+            reportingCurrencySymbol={
+              data.grid?.data?.currency_info?.reporting_currency_symbol
+            }
+            sharePrice={data.grid?.data?.share_price}
+            image={data.grid?.data?.main_thumb}
+            scoreData={data.score?.data}
+          />
+        );
+      })
     );
   }, [data, innerRef]);
 
   return (
     <>
       <ListHeader
-        exchangeSymbol={exchangeSymbol || ''}
+        exchangeSymbol={exchangeSymbol}
         totalRecords={totalRecords}
         {...sortingProps}
       />
